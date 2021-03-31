@@ -15,6 +15,7 @@
         <li>{{ item.title }} -- {{ item.status }}</li>
         <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}">
           <input type="submit" value="Complete Item" />
+          <a onclick="deleteItem({{ item.id }})" href="#">Delete</a>
         </form>
         {% endfor %}
       </ul>

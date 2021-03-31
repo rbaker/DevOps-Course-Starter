@@ -23,6 +23,9 @@ def completeItem(id):
     save_item(item)
     return render_template('index.html', items=get_items())
 
+@app.route('/delete/<id>', methods = ['DELETE'])
+def deleteItem(id):
+    delete_item(str(id))
 
 if __name__ == '__main__':
     app.run()
