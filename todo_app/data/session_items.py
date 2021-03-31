@@ -15,7 +15,7 @@ def get_items():
     Returns:
         list: The list of saved items.
     """
-    return sorted(session.get('items', _DEFAULT_ITEMS), key = custom_sort)
+    return sorted(session.get('items', _DEFAULT_ITEMS), key = custom_sort, reverse=True)
 
 
 def get_item(id):

@@ -12,14 +12,15 @@
       <h2>Items</h2>
       <ul class="list-group mb-4">
         {% for item in items %}
+        <li>{{ item.title }} -- {{ item.status }}</li>
         <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}">
-          <li>{{ item.title }} -- {{ item.status }}</li><input type="submit" value="Complete Item" />
+          <input type="submit" value="Complete Item" />
         </form>
         {% endfor %}
       </ul>
 
       <form id="newItem" method="POST" action="/addItem">
-        <input type="text" id="name" name="name"/>
+        Add item: <input type="text" id="name" name="name"/>
         <input type="submit">
       </form>
     </div>
