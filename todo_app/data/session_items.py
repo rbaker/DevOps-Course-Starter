@@ -5,6 +5,8 @@ _DEFAULT_ITEMS = [
     { 'id': 2, 'status': 'Not Started', 'title': 'Allow new items to be added' }
 ]
 
+def custom_sort(t):
+    return t['status']
 
 def get_items():
     """
@@ -13,7 +15,7 @@ def get_items():
     Returns:
         list: The list of saved items.
     """
-    return session.get('items', _DEFAULT_ITEMS)
+    return sorted(session.get('items', _DEFAULT_ITEMS), key = custom_sort)
 
 
 def get_item(id):
