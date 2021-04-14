@@ -5,6 +5,8 @@ _DEFAULT_ITEMS = [
     { 'id': 2, 'status': 'Not Started', 'title': 'Allow new items to be added' }
 ]
 
+def custom_sort(t):
+    return t['status']
 
 def get_items():
     """
@@ -13,7 +15,7 @@ def get_items():
     Returns:
         list: The list of saved items.
     """
-    return session.get('items', _DEFAULT_ITEMS)
+    return sorted(session.get('items', _DEFAULT_ITEMS), key = custom_sort, reverse=True)
 
 
 def get_item(id):
@@ -67,3 +69,13 @@ def save_item(item):
     session['items'] = updated_items
 
     return item
+
+def delete_item(id):
+    """
+    Deletes an existing item in the session. If no existing item matches the ID of the specified item, nothing is deleted.
+
+    Args:
+        item: The id of the item to delete.
+    """
+    items = get_items()
+    session['items'] = [s for s in items if s['id'] != int(id)]
