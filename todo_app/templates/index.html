@@ -10,18 +10,36 @@
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
+
       <ul class="list-group mb-4">
         {% for item in items %}
-        <li>{{ item.title }} -- {{ item.status }}</li>
-        <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}">
-          <input type="submit" value="Complete Item" />
-        </form>
-        <a onclick="deleteItem({{ item.id }})" href="#">Delete</a>
+          <li>{{ item.name }} -- {{ item.desc }} -- {{ lists[item.idList]['name'] }}</li>
+          
+          {% if item.idList == '607f1ee7c99b117ea947851b' %}
+            <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}/607f1ee7c99b117ea947851c">
+              <input type="submit" value="Start" />
+            </form>
+          {% else %}
+            <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}/607f1ee7c99b117ea947851b">
+              <input type="submit" value="Move back to todo" />
+            </form>
+          {% endif %}
+
+          {% if item.idList != '607f1ee7c99b117ea947851d' %}
+            <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}/607f1ee7c99b117ea947851d">
+              <input type="submit" value="Complete" />
+            </form>
+          {% endif %}
+
+
+          <a onclick="deleteItem('{{ item.id }}')" href="#">Delete</a>
         {% endfor %}
       </ul>
 
       <form id="newItem" method="POST" action="/addItem">
-        Add item: <input type="text" id="name" name="name"/>
+        Add item: <input type="text" id="name" name="name"/> <br/>
+        Description: <textarea id="description" name="description" rows="4" cols="50">
+        </textarea> <br/>
         <input type="submit">
       </form>
     </div>

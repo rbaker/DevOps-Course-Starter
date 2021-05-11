@@ -9,18 +9,16 @@ app.config.from_object(Config)
 
 @app.route('/')
 def index():
-    return render_template('index.html', items=get_items())
+    return render_template('index.html', items=get_items(), lists=get_lists())
 
 @app.route('/addItem', methods = ['POST'])
 def add_todo_item():
-    add_item(request.form.get('name'))
+    add_item(request.form.get('name'), request.form.get('description'))
     return redirect('/')
 
-@app.route('/complete/<id>', methods = ['POST'])
-def complete_todo_item(id):
-    item = get_item(id)
-    item['status'] = "Complete"
-    save_item(item)
+@app.route('/complete/<id>/<list>', methods = ['POST'])
+def complete_todo_item(id, list):
+    save_item(id, list)
     return redirect('/')
 
 @app.route('/delete/<id>', methods = ['DELETE'])
