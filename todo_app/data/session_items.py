@@ -90,7 +90,6 @@ def save_item(id, list):
         'idList': list
     }
     response = requests.put('https://api.trello.com/1/cards/' + id, params=params)
-    print(response)
     r = response.json()
     return Item(r['id'], r['name'], r['desc'], r['idList'])
 
