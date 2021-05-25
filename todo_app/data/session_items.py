@@ -10,10 +10,10 @@ def get_lists():
     Gets all lists on a board 
     """
     params = {
-        'key': os.environ['ACCOUNT_KEY'],
-        'token': os.environ['SECRET_KEY']
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY']
     }
-    response = requests.request('GET', 'https://api.trello.com/1/boards/607f1ee7c99b117ea947851a/lists', params=params)
+    response = requests.request('GET', 'https://api.trello.com/1/boards/' + os.environ['BOARD_ID'] + '/lists', params=params)
     listMap = {}
     for r in response.json():
         listMap[r['id']] = r
@@ -26,15 +26,15 @@ def get_items():
     Returns:
         list: The list of saved items.
     """
-    #return sorted(session.get('items', _DEFAULT_ITEMS), key = custom_sort, reverse=True)
     params = {
-        'key': os.environ['ACCOUNT_KEY'],
-        'token': os.environ['SECRET_KEY']
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY']
     }
-    response = requests.request('GET', 'https://api.trello.com/1/boards/9u4MeVfa/cards', params=params)
+    response = requests.request('GET', 'https://api.trello.com/1/boards/' + os.environ['BOARD_ID'] + '/cards', params=params)
+    listResponse = get_lists()
     objList = []
     for r in response.json():
-        objList.append(Item(r['id'], r['name'], r['desc'], r['idList']))
+        objList.append(Item(r['id'], r['name'], r['desc'], r['idList'], listResponse[r['idList']]['name']))
     return objList
 
 def get_item(id):
@@ -48,8 +48,8 @@ def get_item(id):
         item: The saved item, or None if no items match the specified ID.
     """
     params = {
-        'key': os.environ['ACCOUNT_KEY'],
-        'token': os.environ['SECRET_KEY']
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY']
     }
     response = requests.get('https://api.trello.com/1/cards/' + id, params=params)
     r = response.json()
@@ -67,9 +67,9 @@ def add_item(title, description):
         item: The saved item.
     """
     params = {
-        'key': os.environ['ACCOUNT_KEY'],
-        'token': os.environ['SECRET_KEY'],
-        'idList': '607f1ee7c99b117ea947851b',
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY'],
+        'idList': os.environ['TODO_LIST_ID'],
         'name': title,
         'desc': description
     }
@@ -85,8 +85,8 @@ def save_item(id, list):
         item: The item to save.
     """
     params = {
-        'key': os.environ['ACCOUNT_KEY'],
-        'token': os.environ['SECRET_KEY'],
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY'],
         'idList': list
     }
     response = requests.put('https://api.trello.com/1/cards/' + id, params=params)
@@ -101,7 +101,7 @@ def delete_item(id):
         item: The id of the item to delete.
     """
     params = {
-        'key': os.environ['ACCOUNT_KEY'],
-        'token': os.environ['SECRET_KEY']
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY']
     }
     requests.delete('https://api.trello.com/1/cards/' + id, params=params)

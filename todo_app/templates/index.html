@@ -13,20 +13,20 @@
 
       <ul class="list-group mb-4">
         {% for item in items %}
-          <li>{{ item.name }} -- {{ item.desc }} -- {{ lists[item.idList]['name'] }}</li>
+          <li>{{ item.name }} -- {{ item.desc }} -- {{ item.listName }}</li>
           
-          {% if item.idList == '607f1ee7c99b117ea947851b' %}
-            <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}/607f1ee7c99b117ea947851c">
+          {% if item.listName == 'To Do' %}
+            <form id="completeItem{{item.id}}" method="POST" action="/start/{{item.id}}">
               <input type="submit" value="Start" />
             </form>
           {% else %}
-            <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}/607f1ee7c99b117ea947851b">
+            <form id="completeItem{{item.id}}" method="POST" action="/reset/{{item.id}}">
               <input type="submit" value="Move back to todo" />
             </form>
           {% endif %}
 
-          {% if item.idList != '607f1ee7c99b117ea947851d' %}
-            <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}/607f1ee7c99b117ea947851d">
+          {% if item.listName != 'Done' %}
+            <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}">
               <input type="submit" value="Complete" />
             </form>
           {% endif %}
