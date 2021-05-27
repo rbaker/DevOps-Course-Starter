@@ -1,12 +1,23 @@
-from flask import session
-
-_DEFAULT_ITEMS = [
-    { 'id': 1, 'status': 'Not Started', 'title': 'List saved todo items' },
-    { 'id': 2, 'status': 'Not Started', 'title': 'Allow new items to be added' }
-]
+from todo_app.data.item import Item
+import requests
+import os
 
 def custom_sort(t):
     return t['status']
+
+def get_lists():
+    """
+    Gets all lists on a board 
+    """
+    params = {
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY']
+    }
+    response = requests.request('GET', 'https://api.trello.com/1/boards/' + os.environ['BOARD_ID'] + '/lists', params=params)
+    listMap = {}
+    for r in response.json():
+        listMap[r['id']] = r
+    return listMap
 
 def get_items():
     """
@@ -15,8 +26,16 @@ def get_items():
     Returns:
         list: The list of saved items.
     """
-    return sorted(session.get('items', _DEFAULT_ITEMS), key = custom_sort, reverse=True)
-
+    params = {
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY']
+    }
+    response = requests.request('GET', 'https://api.trello.com/1/boards/' + os.environ['BOARD_ID'] + '/cards', params=params)
+    listResponse = get_lists()
+    objList = []
+    for r in response.json():
+        objList.append(Item(r['id'], r['name'], r['desc'], r['idList'], listResponse[r['idList']]['name']))
+    return objList
 
 def get_item(id):
     """
@@ -28,11 +47,16 @@ def get_item(id):
     Returns:
         item: The saved item, or None if no items match the specified ID.
     """
-    items = get_items()
-    return next((item for item in items if item['id'] == int(id)), None)
+    params = {
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY']
+    }
+    response = requests.get('https://api.trello.com/1/cards/' + id, params=params)
+    r = response.json()
+    return Item(r['id'], r['name'], r['desc'], r['idList'])
 
 
-def add_item(title):
+def add_item(title, description):
     """
     Adds a new item with the specified title to the session.
 
@@ -42,33 +66,32 @@ def add_item(title):
     Returns:
         item: The saved item.
     """
-    items = get_items()
-
-    # Determine the ID for the item based on that of the previously added item
-    id = items[-1]['id'] + 1 if items else 0
-
-    item = { 'id': id, 'title': title, 'status': 'Not Started' }
-
-    # Add the item to the list
-    items.append(item)
-    session['items'] = items
-
-    return item
+    params = {
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY'],
+        'idList': os.environ['TODO_LIST_ID'],
+        'name': title,
+        'desc': description
+    }
+    response = requests.post('https://api.trello.com/1/cards', params=params)
 
 
-def save_item(item):
+
+def save_item(id, list):
     """
     Updates an existing item in the session. If no existing item matches the ID of the specified item, nothing is saved.
 
     Args:
         item: The item to save.
     """
-    existing_items = get_items()
-    updated_items = [item if item['id'] == existing_item['id'] else existing_item for existing_item in existing_items]
-
-    session['items'] = updated_items
-
-    return item
+    params = {
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY'],
+        'idList': list
+    }
+    response = requests.put('https://api.trello.com/1/cards/' + id, params=params)
+    r = response.json()
+    return Item(r['id'], r['name'], r['desc'], r['idList'])
 
 def delete_item(id):
     """
@@ -77,5 +100,8 @@ def delete_item(id):
     Args:
         item: The id of the item to delete.
     """
-    items = get_items()
-    session['items'] = [s for s in items if s['id'] != int(id)]
+    params = {
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY']
+    }
+    requests.delete('https://api.trello.com/1/cards/' + id, params=params)
