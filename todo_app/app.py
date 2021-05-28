@@ -1,3 +1,5 @@
+from werkzeug.utils import validate_arguments
+from todo_app.view_model import ViewModel
 from flask import Flask, render_template, request, redirect
 
 from todo_app.flask_config import Config
@@ -10,7 +12,8 @@ app.config.from_object(Config)
 
 @app.route('/')
 def index():
-    return render_template('index.html', items=get_items())
+    view_model = ViewModel(get_items())
+    return render_template('index.html', view_model=view_model)
 
 @app.route('/addItem', methods = ['POST'])
 def add_todo_item():

@@ -37,6 +37,18 @@ def get_items():
         objList.append(Item(r['id'], r['name'], r['desc'], r['idList'], listResponse[r['idList']]['name']))
     return objList
 
+def get_items_by_list(list):
+    params = {
+        'key': os.environ['TRELLO_ACCOUNT_KEY'],
+        'token': os.environ['TRELLO_SECRET_KEY']
+    }
+    response = requests.request('GET', 'https://api.trello.com/1/lists/' + list + '/cards', params=params)
+    listResponse = get_lists()
+    objList = []
+    for r in response.json():
+        objList.append(Item(r['id'], r['name'], r['desc'], r['idList'], listResponse[r['idList']]['name']))
+    return objList
+
 def get_item(id):
     """
     Fetches the saved item with the specified ID.
