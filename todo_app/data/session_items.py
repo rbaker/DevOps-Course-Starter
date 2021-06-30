@@ -13,7 +13,7 @@ def get_lists():
         'key': os.environ['TRELLO_ACCOUNT_KEY'],
         'token': os.environ['TRELLO_SECRET_KEY']
     }
-    response = requests.request('GET', 'https://api.trello.com/1/boards/' + os.environ['BOARD_ID'] + '/lists', params=params)
+    response = requests.get('https://api.trello.com/1/boards/' + os.environ['BOARD_ID'] + '/lists', params=params)
     listMap = {}
     for r in response.json():
         listMap[r['id']] = r
@@ -30,19 +30,7 @@ def get_items():
         'key': os.environ['TRELLO_ACCOUNT_KEY'],
         'token': os.environ['TRELLO_SECRET_KEY']
     }
-    response = requests.request('GET', 'https://api.trello.com/1/boards/' + os.environ['BOARD_ID'] + '/cards', params=params)
-    listResponse = get_lists()
-    objList = []
-    for r in response.json():
-        objList.append(Item(r['id'], r['name'], r['desc'], r['idList'], listResponse[r['idList']]['name']))
-    return objList
-
-def get_items_by_list(list):
-    params = {
-        'key': os.environ['TRELLO_ACCOUNT_KEY'],
-        'token': os.environ['TRELLO_SECRET_KEY']
-    }
-    response = requests.request('GET', 'https://api.trello.com/1/lists/' + list + '/cards', params=params)
+    response = requests.get('https://api.trello.com/1/boards/' + os.environ['BOARD_ID'] + '/cards', params=params)
     listResponse = get_lists()
     objList = []
     for r in response.json():
@@ -74,7 +62,7 @@ def add_item(title, description):
 
     Args:
         title: The title of the item.
-
+b
     Returns:
         item: The saved item.
     """

@@ -61,3 +61,14 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Unit testing
+
+This project uses `pytest` to unit test the code.
+To run, ensure that pytest has been isntalled, then in a console navigate to the root directory of the project, and type:
+
+```
+pytest
+```
+
+This should run all tests and if successful should display the number of passed tests.

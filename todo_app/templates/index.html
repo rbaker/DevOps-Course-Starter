@@ -9,38 +9,66 @@
 
   <div class="row">
     <div class="col-md-12">
-      <h2>Items</h2>
+      <h2>To Do Items</h2>
 
-      <ul class="list-group mb-4">
-        {% for item in view_model.items %}
-          <li>{{ item.name }} -- {{ item.desc }} -- {{ item.listName }}</li>
+      <ul class="list-group mb-4" id="todoItems">
+        {% for item in view_model.todo_items %}
+          <li>{{ item.name }} -- {{ item.desc }}</li>
           
-          {% if item.listName == 'To Do' %}
-            <form id="completeItem{{item.id}}" method="POST" action="/start/{{item.id}}">
-              <input type="submit" value="Start" />
-            </form>
-          {% else %}
-            <form id="completeItem{{item.id}}" method="POST" action="/reset/{{item.id}}">
-              <input type="submit" value="Move back to todo" />
-            </form>
-          {% endif %}
+          <form id="completeItem{{item.id}}" method="POST" action="/start/{{item.id}}">
+            <input type="submit" value="Start" />
+          </form>
+        
+          <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}">
+            <input type="submit" value="Complete" />
+          </form>
 
-          {% if item.listName != 'Done' %}
-            <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}">
-              <input type="submit" value="Complete" />
-            </form>
-          {% endif %}
-
-
-          <a onclick="deleteItem('{{ item.id }}')" href="#">Delete</a>
+          <a id="delete{{item.id}}" onclick="deleteItem('{{ item.id }}')" href="#">Delete</a>
         {% endfor %}
       </ul>
 
-      <form id="newItem" method="POST" action="/addItem">
+
+      <h2>Doing Items</h2>
+
+      <ul class="list-group mb-4" id="doingItems">
+        {% for item in view_model.doing_items %}
+          <li>{{ item.name }} -- {{ item.desc }}</li>
+          
+          <form id="completeItem{{item.id}}" method="POST" action="/reset/{{item.id}}">
+            <input type="submit" value="Move back to todo" />
+          </form>
+
+          <form id="completeItem{{item.id}}" method="POST" action="/complete/{{item.id}}">
+            <input type="submit" value="Complete" />
+          </form>
+
+          <a id="delete{{item.id}}" onclick="deleteItem('{{ item.id }}')" href="#">Delete</a>
+        {% endfor %}
+      </ul>
+
+
+
+      <h2>Done Items</h2>
+
+      <ul class="list-group mb-4" id="doneItems">
+        {% for item in view_model.done_items %}
+          <li>{{ item.name }} -- {{ item.desc }}</li>
+
+          <form id="completeItem{{item.id}}" method="POST" action="/reset/{{item.id}}">
+            <input type="submit" value="Move back to todo" />
+          </form>
+
+          <a id="delete{{item.id}}" onclick="deleteItem('{{ item.id }}')" href="#">Delete</a>
+        {% endfor %}
+      </ul>
+
+
+
+      <form id="newItem" method="POST" action="/addItem" id="createItem">
         Add item: <input type="text" id="name" name="name"/> <br/>
         Description: <textarea id="description" name="description" rows="4" cols="50">
         </textarea> <br/>
-        <input type="submit">
+        <input id="submitItem" type="submit">
       </form>
     </div>
   </div>
