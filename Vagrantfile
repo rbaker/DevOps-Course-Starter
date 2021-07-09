@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
     poetry update package
     poetry install
     mkdir -p logs
-    nohup $(poetry env info -p)/bin/gunicorn --bind 0.0.0.0:5000 wsgi:app --daemon --access-logfile accesslog.txt --log-file logs/log.txt 
+    nohup $(poetry env info -p)/bin/gunicorn --bind 0.0.0.0:5000 wsgi:app --daemon --access-logfile logs/accesslog.txt --log-file logs/log.txt 
     "}
   end
 
