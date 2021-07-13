@@ -13,9 +13,9 @@
 
       <ul class="list-group mb-4" id="todoItems">
         {% for item in view_model.todo_items %}
-          <li>{{ item.name }} -- {{ item.desc }}</li>
+          <li class="todoItem">{{ item.name }} -- {{ item.desc }}</li>
           
-          <form id="completeItem{{item.id}}" method="POST" action="/start/{{item.id}}">
+          <form id="startItem{{item.id}}" method="POST" action="/start/{{item.id}}">
             <input type="submit" value="Start" />
           </form>
         
@@ -32,9 +32,9 @@
 
       <ul class="list-group mb-4" id="doingItems">
         {% for item in view_model.doing_items %}
-          <li>{{ item.name }} -- {{ item.desc }}</li>
+          <li class="doingItem">{{ item.name }} -- {{ item.desc }}</li>
           
-          <form id="completeItem{{item.id}}" method="POST" action="/reset/{{item.id}}">
+          <form id="resetItem{{item.id}}" method="POST" action="/reset/{{item.id}}">
             <input type="submit" value="Move back to todo" />
           </form>
 
@@ -52,9 +52,9 @@
 
       <ul class="list-group mb-4" id="doneItems">
         {% for item in view_model.done_items %}
-          <li>{{ item.name }} -- {{ item.desc }}</li>
+          <li class="doneItem">{{ item.name }} -- {{ item.desc }}</li>
 
-          <form id="completeItem{{item.id}}" method="POST" action="/reset/{{item.id}}">
+          <form id="resetItem{{item.id}}" method="POST" action="/reset/{{item.id}}">
             <input type="submit" value="Move back to todo" />
           </form>
 
