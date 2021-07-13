@@ -73,3 +73,7 @@ poetry run pytest
 ```
 
 This should run all tests and if successful should display the number of passed tests.
+
+## Deployment
+
+This project uses Vagrant to spin up a virtual machines with the app installed. Please ensure that this is installed locally before running `vagrant up` from the root directory of this project.
