@@ -76,4 +76,23 @@ This should run all tests and if successful should display the number of passed 
 
 ## Deployment
 
-This project uses Vagrant to spin up a virtual machines with the app installed. Please ensure that this is installed locally before running `vagrant up` from the root directory of this project.
+This project uses Docker to spin up a containers with app installed. Please ensure that this is installed locally before running.
+
+### Production
+
+To run the app with the production configuration, navigate to the root directory and then run the following
+
+```
+$ docker build --target production  --tag todo-app:prod .
+$ docker run -d -p 80:5000 --env-file .env todo-app:prod
+```
+
+### Development and Testbed
+
+The development and testbed configuration have been bundled into the `docker-compose.yml` file. Navigate to the root directory and run the following:
+
+```
+$ docker-compose up -d
+```
+
+This will start the development server on port 5000, and also starts the testbed, which will run the unit and integration tests when a change to the code is detected.
