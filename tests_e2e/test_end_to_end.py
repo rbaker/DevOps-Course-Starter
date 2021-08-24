@@ -17,8 +17,11 @@ class TestE2E (unittest.TestCase):
         self._driver = webdriver.Chrome()
         self._driver.implicitly_wait(5)
 
-        file_path = find_dotenv('.env')
-        load_dotenv(file_path, override=True)
+        print (os.environ.get('FLASK_APP'))
+
+        if os.environ.get('FLASK_APP') == None:
+            file_path = find_dotenv('.env')
+            load_dotenv(file_path, override=True)
         board_id = self.create_trello_board()
 
         os.environ['BOARD_ID'] = board_id
