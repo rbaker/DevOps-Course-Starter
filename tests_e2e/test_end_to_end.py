@@ -1,6 +1,5 @@
 import os
 import unittest
-import pytest
 import requests
 import re
 import time
@@ -14,7 +13,13 @@ from selenium import webdriver
 class TestE2E (unittest.TestCase):
 
     def setUp(self):
-        self._driver = webdriver.Chrome()
+        options = webdriver.ChromeOptions()
+        options.add_argument("no-sandbox")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--headless")
+
+        self._driver = webdriver.Chrome(options=options)
         self._driver.implicitly_wait(5)
 
         print (os.environ.get('FLASK_APP'))
