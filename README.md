@@ -77,3 +77,13 @@ This should run all tests and if successful should display the number of passed 
 ## Deployment
 
 This project uses Vagrant to spin up a virtual machines with the app installed. Please ensure that this is installed locally before running `vagrant up` from the root directory of this project.
+
+
+## Documentation
+
+C4 model diagrams can be found in the `documentation` folder. The context, container and component diagrams are in SVG format and can be edited using draw.io.
+The class diagram is saved in [https://plantuml.com/](plantUML) format; the resulting SVG is saved in `code.svg`. To convert the file to an SVG image, you will need the plantuml jar file installed locally along with the java runtime environment. Run the following from the project root directory:
+
+```
+$ java -jar /path/to/plantuml.jar -tsvg  documentation/code.puml
+```

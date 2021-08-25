@@ -1,0 +1,48 @@
+@startuml code
+
+class todo_app.app {
+    app
+    view_model index()
+    add_todo_item()
+    start_todo_item(id)
+    complete_todo_item(id)
+    reset_todo_item(id)
+    delete_todo_item(id)
+}
+
+class todo_app.view_model {
+    items()
+    todo_items()
+    doing_items()
+    done_items()
+}
+
+class todo_app.flask_config {
+    
+}
+
+todo_app.app ..> todo_app.view_model :creates
+todo_app.app <.. todo_app.flask_config :configures
+
+class todo_app.data.session_items {
+    Map get_lists()
+    List get_items()
+    Item get_item(id)
+    add_item(title, description)
+    Item save_item(id, list)
+    delete_item(id)
+}
+
+class todo_app.data.item {
+    id
+    name
+    desc
+    idList
+    listNane
+}
+
+todo_app.app <---right---> todo_app.data.session_items:uses
+
+todo_app.data.session_items ..> todo_app.data.item:creates
+
+@enduml
