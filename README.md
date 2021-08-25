@@ -83,7 +83,7 @@ This project uses Vagrant to spin up a virtual machines with the app installed. 
 
 C4 model diagrams can be found in the `documentation` folder. The context, container and component diagrams are in SVG format and can be edited using draw.io.
 
-The code diagram is saved in [https://plantuml.com/](plantUML) format; the resulting SVG is saved in `code.svg`. To convert the file to an SVG image yourself, you will need the plantuml jar file installed locally along with a java runtime environment. Run the following from the project root directory:
+The code diagram is saved in [PlantUML](https://plantuml.com/) format; the resulting SVG is saved in `code.svg`. To convert the file to an SVG image yourself, you will need the plantuml jar file installed locally along with a java runtime environment. Run the following from the project root directory:
 
 ```
 $ java -jar /path/to/plantuml.jar -tsvg  documentation/code.puml
