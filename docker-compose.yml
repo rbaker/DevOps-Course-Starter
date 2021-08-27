@@ -4,7 +4,7 @@ services:
     development:
         build:
             context: .
-            dockerfile: dockerfile
+            dockerfile: Dockerfile
             target: dev
         ports:
             - "5000:5000"
@@ -12,7 +12,7 @@ services:
     test:
         build:
             context: .
-            dockerfile: dockerfile
+            dockerfile: Dockerfile
             target: test
         env_file: ".env.test"
         volumes:
