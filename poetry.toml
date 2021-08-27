@@ -1,4 +1,3 @@
 [virtualenvs]
 create = true
-in-project = false
-path = "{cache-dir}/venvs"
+in-project = true
