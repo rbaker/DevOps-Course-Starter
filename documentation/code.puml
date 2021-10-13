@@ -1,8 +1,10 @@
 @startuml code
+allow_mixing
 
 class todo_app.app {
     app
-    view_model index()
+    create_app()
+    ViewModel index()
     add_todo_item()
     start_todo_item(id)
     complete_todo_item(id)
@@ -10,19 +12,21 @@ class todo_app.app {
     delete_todo_item(id)
 }
 
-class todo_app.view_model {
+class todo_app.ViewModel {
     items()
     todo_items()
     doing_items()
     done_items()
 }
 
-class todo_app.flask_config {
+class todo_app.Config {
     
 }
 
-todo_app.app ..> todo_app.view_model :creates
-todo_app.app <.. todo_app.flask_config :configures
+todo_app.app ..> todo_app.ViewModel :creates
+todo_app.app <.. todo_app.Config :configures
+
+
 
 class todo_app.data.session_items {
     Map get_lists()
@@ -33,7 +37,7 @@ class todo_app.data.session_items {
     delete_item(id)
 }
 
-class todo_app.data.item {
+class todo_app.data.Item {
     id
     name
     desc
@@ -43,6 +47,6 @@ class todo_app.data.item {
 
 todo_app.app <---right---> todo_app.data.session_items:uses
 
-todo_app.data.session_items ..> todo_app.data.item:creates
+todo_app.data.session_items ..> todo_app.data.Item:creates
 
 @enduml
