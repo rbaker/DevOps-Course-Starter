@@ -96,3 +96,13 @@ $ docker-compose up -d
 ```
 
 This will start the development server on port 5000, and also starts the testbed, which will run the unit and integration tests when a change to the code is detected.
+
+## Documentation
+
+C4 model diagrams can be found in the `documentation` folder. The context, container and component diagrams are in SVG format and can be edited using draw.io.
+
+The code diagram is saved in [PlantUML](https://plantuml.com/) format; the resulting SVG is saved in `code.svg`. To convert the file to an SVG image yourself, you will need the plantuml jar file installed locally along with a java runtime environment. Run the following from the project root directory:
+
+```
+$ java -jar /path/to/plantuml.jar -tsvg  documentation/code.puml
+```
