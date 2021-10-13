@@ -34,3 +34,21 @@ COPY tests ./tests
 RUN poetry install
 ENTRYPOINT [ "poetry" ]
 CMD [ "run", "ptw" ]
+
+FROM base as test_e2e
+# install chromedriver
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+RUN apt-get update -y
+RUN apt-get install -y google-chrome-stable
+ENV CHROMEDRIVER_DIR /chromedriver
+RUN mkdir $CHROMEDRIVER_DIR
+RUN wget -q --continue -P $CHROMEDRIVER_DIR "https://chromedriver.storage.googleapis.com/94.0.4606.61/chromedriver_linux64.zip"
+RUN unzip $CHROMEDRIVER_DIR/chromedriver* -d $CHROMEDRIVER_DIR
+ENV PATH $CHROMEDRIVER_DIR:$PATH
+# finish installing chromedrover
+
+COPY tests_e2e ./tests_e2e
+RUN poetry install
+ENTRYPOINT [ "poetry" ]
+CMD [ "run", "ptw" ]
