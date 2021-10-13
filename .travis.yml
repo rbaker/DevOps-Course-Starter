@@ -1,2 +1,2 @@
 script:
-- echo "this is a test"
+- docker build --target production  --tag todo-app:prod .
