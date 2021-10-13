@@ -1,2 +1,4 @@
 script:
 - docker build --target production  --tag todo-app:prod .
+- docker build --target test --tag todo-app:test .
+- docker run --env-file ./.env.test todo-app:test
