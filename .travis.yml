@@ -1,7 +1,7 @@
 services:
 - docker
 script:
-- docker build --target test --tag todo-app:test .
+- docker build --target testasdfasdfasdf --tag todo-app:test .
 - docker run --env-file .env.test todo-app:test tests
 - docker run
   -e SECRET_KEY=$SECRET_KEY
@@ -26,6 +26,6 @@ notifications:
     secure: e3F0+2j1DJnITyWPf+NybR8uswZe5EM/rtw5eIJ/1V8/bwiaVlqg6ii5a6pMCjoEwq09rrOI8uXhGXHgutMXM4f4fRGXxxDdm/Z5mD6N+p1PeWtGO5CoGCw5+349ks44NTMIx023w/p1moD5O+ty+h4Qnt0VGndUB08WF4bM2NxgOGTpJ/uzP+vZ6DL97k3JHJ9tDU+Zqc3eJjBRG6kPDYx0gveFlsBDR/9eTZURSzB6gXmZ1dpwwT9Qf0RFOx/S0M0kkyPsaMMuDqWfmKiPelbQxK0lIPGnjc9j2ywF9j6F3d5NRAMAQevezJTHWEetFrcArjipMgBfRvvhpcBBpoXQc/APFrzf+UFczpX/TMHLtDa10FtUSErNut5tVBO+m/PcdMsWawmkuiG8aZu3OU2n6wJfeAundpk/EwmnjNqAv6aQMczfnCD+wNOEnI/k74pqOZ+2fW2Ep7m350BWE1aISBOll5Fp8J2ujOK2i5AteEulfsL3bc7Fs/TmqHKsgqZCvgwdoiQdPn4qd7ArxRMjVCk32bgS4gx44qIyfIV4xnwYKirTGwhJ2UJleCSWY3+J64MpxTYd1RHF7rwtef+JjV5wn9xxX47gC3UTJwjKdCfBPuMYLqTJYewEg7AdTN2H/i1GPnxTeAScweRzx5ac9/4vFDmUOa61dd6iDF4=
   email:
     recipients:
-      - richardgbaker@yahoo.co.uk
-    on_success: always
+    - richardgbaker@yahoo.co.uk
+    on_success: never
     on_failure: always
