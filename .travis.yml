@@ -1,9 +1,11 @@
+services:
+- docker
 script:
 - docker build --target production  --tag todo-app:prod .
 - docker build --target test --tag todo-app:test .
 - docker run --env-file .env.test todo-app:test
 - docker build --target test_e2e --tag todo-app:test_e2e .
-- docker run --env-file .env todo-app:test_e2e
+- docker run -e SECRET_KEY='$SECRET_KEY' -e TRELLO_ACCOUNT_KEY='$TRELLO_ACCOUNT_KEY' -e TRELLO_SECRET_KEY='$TRELLO_SECRET_KEY' -e BOARD_ID='$BOARD_ID' -e TODO_LIST_ID='$TODO_LIST_ID' -e IN_PROGRESS_LIST_ID='$IN_PROGRESS_LIST_ID' -e DONE_LIST_ID='$DONE_LIST_ID' todo-app:test_e2e
 env:
   global:
   - secure: cBZMzK6O6ZeXEuKqLckOb4RgUCUN8OrYKY34/5csjngwno5MXpR1VryEsispWRKa7VVRSmBNVcyTBdAYUk8356p84ziVBZjXrFI/8FTMeuwEbqnM/aMWRpz8Mwpw9Q1l71LU16fjZxu39xB1aR5VoEpZQpcrVFiZAa/eAb6fOKfEoD8V/L+lXafdrKAv8l9lN+NpRFen+XhBrnOreszuDVybEoGxaHJh1RdbMM4yfSQfRlp9ykxoOOcVarwzR92XlywkgdrFykn4oyPAQA8NSz97Sx9l2ka0iPs9IMSczwiqIOVD6S/9X3BYcQcDT0vO0R4CzhO/PgruWLEMd//Rq2CbbnBJzJOl/MNduU4da4d2yO+R8JjNMBdBl0R3NVqfFGpp8dxhYhlwhoJ/F8OsudS2z7C7IaHd1no8yvg+FyfPuKD4GPUAJukcfGG6hzA93HZcM2a1gkwZNWoSr0oWDzWX0ExeJnMCIQGCBU6FuSb6JmP/RGrW4xD+WKLqZ9wognM4COI3QFhJ8nRPLcpMA54A7+h8NPo0EDa2qBXmyJm3fk5gaP1y1OenL9c9xNsvCIY4NsVC1T6iO1S+TRgSQhzDDtfnqWleUhfjD7w8TThiTgv2+LDHwRdA4VOQFE8NyNhv+vH+aaro1h9BmFVsdhiZ68pFmQbIjkBxEf2P1qE=
