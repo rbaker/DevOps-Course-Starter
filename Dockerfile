@@ -30,12 +30,7 @@ CMD [ "run", "flask", "run", "-h", "0.0.0.0" ]
 # test
 #
 FROM base as test
-COPY tests ./tests
-RUN poetry install
-ENTRYPOINT [ "poetry" ]
-CMD [ "run", "pytest" ]
 
-FROM base as test_e2e
 # install chromedriver
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
@@ -48,7 +43,8 @@ RUN unzip $CHROMEDRIVER_DIR/chromedriver* -d $CHROMEDRIVER_DIR
 ENV PATH $CHROMEDRIVER_DIR:$PATH
 # finish installing chromedrover
 
+COPY tests ./tests
 COPY tests_e2e ./tests_e2e
 RUN poetry install
-ENTRYPOINT [ "poetry" ]
-CMD [ "run", "pytest" ]
+ENTRYPOINT [ "poetry", "run", "pytest" ]
+CMD [ "tests" ]
