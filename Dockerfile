@@ -33,7 +33,7 @@ FROM base as test
 COPY tests ./tests
 RUN poetry install
 ENTRYPOINT [ "poetry" ]
-CMD [ "run", "ptw" ]
+CMD [ "run", "pytest" ]
 
 FROM base as test_e2e
 # install chromedriver
@@ -51,4 +51,4 @@ ENV PATH $CHROMEDRIVER_DIR:$PATH
 COPY tests_e2e ./tests_e2e
 RUN poetry install
 ENTRYPOINT [ "poetry" ]
-CMD [ "run", "ptw" ]
+CMD [ "run", "pytest" ]
