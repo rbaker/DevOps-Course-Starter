@@ -19,7 +19,12 @@ services:
         volumes:
             - ./todo_app:/todo-app/todo_app
     test_e2e:
-        image: devops-course-starter_test
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: test
+        depends_on:
+            - "test"
         env_file: ".env"
         command: tests_e2e
         volumes:
