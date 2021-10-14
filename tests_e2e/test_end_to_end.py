@@ -24,9 +24,6 @@ class TestE2E (unittest.TestCase):
         self._driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install(), options=options)
         self._driver.implicitly_wait(5)
 
-        print("board id: " + os.getenv('BOARD_ID'))
-        print("board id: " + os.getenv('TRELLO_ACCOUNT_KEY'))
-
         file_path = find_dotenv('.env')
         load_dotenv(file_path, override=True)
         board_id = self.create_trello_board()
