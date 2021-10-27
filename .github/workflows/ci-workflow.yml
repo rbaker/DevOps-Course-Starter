@@ -13,6 +13,7 @@ jobs:
       TODO_LIST_ID: ${{ secrets.TODO_LIST_ID }}
       IN_PROGRESS_LIST_ID: ${{ secrets.IN_PROGRESS_LIST_ID }}
       DONE_LIST_ID: ${{ secrets.DONE_LIST_ID }}
+        
 
     steps:
       - uses: actions/checkout@v2
@@ -39,7 +40,7 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         if: success()
         env:
-          SLACK_CHANNEL: rich
+          SLACK_CHANNEL: workshop-7-alerts-rich-sushma
           SLACK_COLOR: ${{ job.status }}
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_MESSAGE: ':rocket:'
@@ -51,7 +52,7 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         if: failure()
         env:
-          SLACK_CHANNEL: rich
+          SLACK_CHANNEL: workshop-7-alerts-rich-sushma
           SLACK_COLOR: ${{ job.status }}
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_MESSAGE: ':cry:'
@@ -63,7 +64,7 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         if: cancelled()
         env:
-          SLACK_CHANNEL: rich
+          SLACK_CHANNEL: workshop-7-alerts-rich-sushma
           SLACK_COLOR: ${{ job.status }}
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_MESSAGE: ':man-shrugging:'
