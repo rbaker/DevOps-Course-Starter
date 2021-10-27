@@ -5,6 +5,8 @@ import re
 import time
 from dotenv import find_dotenv, load_dotenv
 from selenium.common.exceptions import NoSuchElementException
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.utils import ChromeType
 from todo_app.app import create_app
 from todo_app.data.session_items import get_lists
 from threading import Thread
@@ -19,7 +21,7 @@ class TestE2E (unittest.TestCase):
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--headless")
 
-        self._driver = webdriver.Chrome(options=options)
+        self._driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install(), options=options)
         self._driver.implicitly_wait(5)
 
         file_path = find_dotenv('.env')

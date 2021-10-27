@@ -95,7 +95,7 @@ The development and testbed configuration have been bundled into the `docker-com
 $ docker-compose up -d
 ```
 
-This will start the development server on port 5000, and also starts the testbed, which will run the unit and integration tests when a change to the code is detected.
+This will start the development server on port 5000, and also starts the testbed, which will run the unit, integration and end-to-end tests when a change to the code is detected.
 
 ## Documentation
 

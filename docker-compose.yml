@@ -15,5 +15,17 @@ services:
             dockerfile: Dockerfile
             target: test
         env_file: ".env.test"
+        command: tests
+        volumes:
+            - ./todo_app:/todo-app/todo_app
+    test_e2e:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: test
+        depends_on:
+            - "test"
+        env_file: ".env"
+        command: tests_e2e
         volumes:
             - ./todo_app:/todo-app/todo_app
