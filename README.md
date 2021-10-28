@@ -84,7 +84,7 @@ To run the app with the production configuration, navigate to the root directory
 
 ```
 $ docker build --target production  --tag todo-app:prod .
-$ docker run -d -p 80:5000 --env-file .env todo-app:prod
+$ docker run -d -p 80:5000 --env-file .env -e PORT=5000 todo-app:prod
 ```
 
 ### Development and Testbed
