@@ -80,3 +80,10 @@ jobs:
       
       - name: Push to Docker
         run: docker push ${{ secrets.DOCKER_USERNAME }}/todo-list_production --all-tags
+
+      - name: Push to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "rich-todo-list"
+          heroku_email: "richardgbaker@yahoo.co.uk"
