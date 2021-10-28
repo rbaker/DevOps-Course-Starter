@@ -87,3 +87,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "rich-todo-list"
           heroku_email: "richardgbaker@yahoo.co.uk"
+          branch: ${GITHUB_REF#refs/heads/}
