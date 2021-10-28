@@ -76,7 +76,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build image
-        run: docker build --target production -t ${{ secrets.DOCKER_USERNAME }}/todo-list_production:latest -t ${{ secrets.DOCKER_USERNAME }}/todo-list_production:${{ github.head_ref }}.${{ github.sha }} .
+        run: docker build --target production -t ${{ secrets.DOCKER_USERNAME }}/todo-list_production:latest -t ${{ secrets.DOCKER_USERNAME }}/todo-list_production:${GITHUB_REF#refs/heads/}.${{ github.sha }} .
       
       - name: Push to Docker
         run: docker push ${{ secrets.DOCKER_USERNAME }}/todo-list_production --all-tags
