@@ -77,6 +77,7 @@ This should run all tests and if successful should display the number of passed 
 ## Deployment
 
 This project uses Docker to spin up a containers with app installed. Please ensure that this is installed locally before running.
+It is now integrated with Heroku. When a change is committed, a github actions pipeline will build and test the code before pushing a built image to both Docker hub and Heroku. After the push, the image will be released in Heroku.
 
 ### Production
 
@@ -84,7 +85,7 @@ To run the app with the production configuration, navigate to the root directory
 
 ```
 $ docker build --target production  --tag todo-app:prod .
-$ docker run -d -p 80:5000 --env-file .env todo-app:prod
+$ docker run -d -p 80:5000 --env-file .env -e PORT=5000 todo-app:prod
 ```
 
 ### Development and Testbed

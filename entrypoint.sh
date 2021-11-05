@@ -1,0 +1,1 @@
+/todo-app/.venv/bin/gunicorn --bind 0.0.0.0:$PORT wsgi:app --access-logfile logs/accesslog.txt

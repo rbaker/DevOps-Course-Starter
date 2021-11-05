@@ -13,6 +13,7 @@ jobs:
       TODO_LIST_ID: ${{ secrets.TODO_LIST_ID }}
       IN_PROGRESS_LIST_ID: ${{ secrets.IN_PROGRESS_LIST_ID }}
       DONE_LIST_ID: ${{ secrets.DONE_LIST_ID }}
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         
 
     steps:
@@ -68,3 +69,27 @@ jobs:
           SLACK_TITLE: Build Cancelled
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Login to Docker
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Login to Docker for Heroku
+        run: docker login --username=_ --password=${{ secrets.HEROKU_API_KEY }} registry.heroku.com
+
+      - name: Build image
+        run: docker build --target production -t ${{ secrets.DOCKER_USERNAME }}/todo-list_production:latest -t ${{ secrets.DOCKER_USERNAME }}/todo-list_production:${GITHUB_REF#refs/heads/}.${{ github.sha }} .
+      
+      - name: Push to Docker
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/todo-list_production --all-tags
+
+      - name: Tag for Heroku
+        run: docker tag ${{ secrets.DOCKER_USERNAME }}/todo-list_production:latest registry.heroku.com/rich-todo-list/web
+      
+      - name: Push to heroku
+        run: docker push registry.heroku.com/rich-todo-list/web
+
+      - name: Deploy heroku
+        run: heroku container:release web --app rich-todo-list

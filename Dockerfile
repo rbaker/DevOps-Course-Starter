@@ -14,9 +14,10 @@ COPY todo_app ./todo_app
 # production app
 #
 FROM base as production
+COPY entrypoint.sh ./
+RUN chmod +x ./entrypoint.sh
 RUN poetry install --no-dev
-ENTRYPOINT [ "/todo-app/.venv/bin/gunicorn" ]
-CMD [ "--bind", "0.0.0.0:5000", "wsgi:app", "--access-logfile", "logs/accesslog.txt" ]
+ENTRYPOINT ./entrypoint.sh
 
 #
 # development app
