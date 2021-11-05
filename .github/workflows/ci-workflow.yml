@@ -81,10 +81,11 @@ jobs:
       - name: Push to Docker
         run: docker push ${{ secrets.DOCKER_USERNAME }}/todo-list_production --all-tags
 
-      - name: Push to Heroku
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "rich-todo-list"
-          heroku_email: "richardgbaker@yahoo.co.uk"
-          branch: ${GITHUB_REF#refs/heads/}
+      - name: Tag for Heroku
+        run: docker tag ${{ secrets.DOCKER_USERNAME }}/todo-list_production:latest registry.heroku.com/rich-todo-list/web
+      
+      - name: Push to heroku
+        run: docker push registry.heroku.com/rich-todo-list/web
+
+      - name: Deploy heroku
+        run: heroku container:release web --app rich-todo-list
